@@ -23,18 +23,17 @@ function encode {
        	"$PATH_TO_SAVE"
 }
 
-for ENTRY in "$PNG_DIR"*/*/
+for ENTRY in "$PNG_DIR"*/
 do
 	NAME=$(echo "$ENTRY" | cut -d"/" -f3);
 	echo "$NAME";
 
-	PATH_TO_FILE="../png/$NAME/Artistinimi/%04d.png"
+	PATH_TO_FILE="../png/$NAME/%04d.png"
 	echo "$PATH_TO_FILE"
 
 	PATH_TO_SAVE="../videos/$NAME.mov"
 	echo "$PATH_TO_SAVE"
 
 	encode
-
 done
 
