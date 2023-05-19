@@ -12,12 +12,13 @@ extract () {
 	for file in ../zipfiles/*.zip;
 	do
 		name=$(echo "$file" | cut -d'/' -f3 | cut -d'.' -f1)
+		#echo "$file"
 
 		check_dir
 		
 		# '-q' quiet, '-n' do not extract existing files,
 		# '-d' output directory
-		unzip -q -n -d ../png/$name "$file"
+		unzip -q -n -j "$file" '*/*' '*' -d ../png/"$name"
 
 		rename
 	done
@@ -38,10 +39,11 @@ rename () {
 
 	index=1
 
-	for file in ../png/$name/*/*.png;
+	for file in ../png/"$name"/*.png;
 	do
-		path=$(echo "$file" | cut -d'/' -f1-4)
+		path=$(echo "$file" | cut -d'/' -f1-3)
 		new_name=$(printf "%04d.png" "$index") #04 pad to length of 4
+
 		mv -- "$file" "$path/$new_name"
 		let index=index+1
 	done
