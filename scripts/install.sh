@@ -12,6 +12,10 @@ mkdir ../zipfiles
 
 # Directory for compiled videos 
 mkdir ../videos
+mkdir ../videos/end
+mkdir ../videos/start
+mkdir ../videos/full
+mkdir ../videos/loop
 
 # Directory for png sequences
 mkdir ../png

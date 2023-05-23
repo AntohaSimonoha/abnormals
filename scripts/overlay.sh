@@ -1,6 +1,6 @@
 #! /bin/bash
 
-PNG_DIR='../png/'
+VIDEO_DIR='../videos/'
 
 # FFMPEG variables
 FPS=30
@@ -9,11 +9,6 @@ CODEC="prores_ks"
 PIXFMT="yuva444p10"
 VENDOR="ap10"
 PROFILE_NUM=4
-
-END="../videos/AkanatinaEND.mov"
-FULL="../videos/_Nutel1a_FULL.mov"
-START="../videos/AkanatinaSTART.mov"
-PATH_TO_SAVE="../videos/AkanatinaLOOP.mov"
 
 function overlay {
 
@@ -34,32 +29,20 @@ function overlay {
        	"$PATH_TO_SAVE"
 }
 
-	#-vcodec "$CODEC"\
-       	#-pix_fmt "$PIXFMT"\
-       	#-vendor "$VENDOR"\
-       	#-profile:v "$PROFILE_NUM"\
-	#"[0:v]setpts=PTS+6.6666/TB[end];[end][1:v]overlay[full_end];[full_end][2:v]overlay"\
+for ENTRY in "$VIDEO_DIR"end/*
+do
+	END="$ENTRY"
+	NAME=$(echo "${ENTRY::-4}" | cut -d"/" -f4)
+	
+	START=$(echo "$ENTRY" | awk 'BEGIN{FS=OFS="/"} {if (NR==1) {$3 = "start"}; print}') 
+	FULL=$(echo "$ENTRY" | awk 'BEGIN{FS=OFS="/"} {if (NR==1) {$3 = "full"}; print}') 
 
-overlay "$END" "$FULL" "$START" "$PATH_TO_SAVE"
+	PATH_TO_SAVE="../videos/loop/$NAME.mov"
 
-#for ENTRY in "$PNG_DIR"*/
-#do
-	#NAME=$(echo "$ENTRY" | cut -d"/" -f3);
-	#echo "$NAME";
+	echo "$START"
+	echo "$FULL"
+	echo "$END"
+	echo "$PATH_TO_SAVE"
 
-	#PATH_TO_FILE="../png/$NAME/%04d.png"
-	#echo "$PATH_TO_FILE"
-
-	#PATH_TO_SAVE_FULL="../videos/"$NAME"FULL.mov"
-	#echo "$PATH_TO_SAVE"
-
-	#PATH_TO_SAVE_START="../videos/"$NAME"START.mov"
-	#echo "$PATH_TO_SAVE"
-
-	#PATH_TO_SAVE_END="../videos/"$NAME"END.mov"
-	#echo "$PATH_TO_SAVE"
-
-	#encode "$START" "$END" "$PATH_TO_SAVE_FULL"
-	#encode "$(($START + 200))" "$END" "$PATH_TO_SAVE_START"
-	#encode "$START" "$(($END - 200))" "$PATH_TO_SAVE_END"
-#done
+	overlay "$END" "$FULL" "$START" "$PATH_TO_SAVE"
+done
