@@ -38,13 +38,13 @@ do
 	PATH_TO_FILE="../png/$NAME/%04d.png"
 	echo "$PATH_TO_FILE"
 
-	PATH_TO_SAVE_FULL="../videos/"$NAME"FULL.mov"
+	PATH_TO_SAVE_FULL="../videos/full/"$NAME".mov"
 	echo "$PATH_TO_SAVE"
 
-	PATH_TO_SAVE_START="../videos/"$NAME"START.mov"
+	PATH_TO_SAVE_START="../videos/start/"$NAME".mov"
 	echo "$PATH_TO_SAVE"
 
-	PATH_TO_SAVE_END="../videos/"$NAME"END.mov"
+	PATH_TO_SAVE_END="../videos/end/"$NAME".mov"
 	echo "$PATH_TO_SAVE"
 
 	encode "$START" "$END" "$PATH_TO_SAVE_FULL"
