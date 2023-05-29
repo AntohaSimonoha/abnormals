@@ -18,7 +18,7 @@ function encode {
 	END_NUMBER=$2
 	PATH_TO_SAVE=$3
 
-	ffmpeg -start_number "$START_NUMBER"\
+	ffmpeg -y -start_number "$START_NUMBER"\
 	-framerate "$FPS"\
        	-i "$PATH_TO_FILE"\
 	-vcodec "$CODEC"\

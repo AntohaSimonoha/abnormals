@@ -1,25 +1,32 @@
 #! /bin/bash
 
-
 # Color variables
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+
+ZIP="\.zip$"
+RAR="\.rar$"
 
 # Extract .png files from .zip's (../zipfiles/ARTISTNAME.zip)
 # to (../png/ARTISTNAME/*.png)
 extract () {
 
-	for file in ../zipfiles/*.zip;
+	for file in ../zipfiles/*;
 	do
 		name=$(echo "$file" | cut -d'/' -f3 | cut -d'.' -f1)
+
+		if [[ $file =~ $ZIP ]]; then
+			# '-q' quiet, '-n' do not extract existing files,
+			# '-d' output directory, '-j' flatten
+			
+			unzip -q -n -j "$file" -d ../png/"$name"
+		elif [[ $file =~ $RAR ]]; then
+			unrar e "$file" ../png/"$name"/
+		fi
+		
 		#echo "$file"
 
 		check_dir
-		
-		# '-q' quiet, '-n' do not extract existing files,
-		# '-d' output directory
-		unzip -q -n -j "$file" '*/*' '*' -d ../png/"$name"
-
 		rename
 	done
 }
@@ -44,7 +51,7 @@ rename () {
 		path=$(echo "$file" | cut -d'/' -f1-3)
 		new_name=$(printf "%04d.png" "$index") #04 pad to length of 4
 
-		mv -- "$file" "$path/$new_name"
+		mv -n -- "$file" "$path/$new_name"
 		let index=index+1
 	done
 }

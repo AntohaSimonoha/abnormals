@@ -5,7 +5,7 @@ set -x
 sudo apt update && sudo apt upgrade
 
 # Install dependencies
-sudo apt install ffmpeg unzip tree
+sudo apt install ffmpeg unzip unrar tree
 
 # Directory fo zipfiles
 mkdir ../zipfiles
